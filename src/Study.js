@@ -3,11 +3,11 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { readDeck } from "./utils/api/index";
 
 
-function Study () {
+function Study ( {deck, setDeck, cards, setCards, cardNumber, setCardNumber} ) {
     const {deckId} = useParams()
-    const [deck, setDeck] = useState({})
-    const [cards, setCards] = useState([])
-    const [cardNumber, setCardNumber] = useState(1)
+    // const [deck, setDeck] = useState({})
+    // const [cards, setCards] = useState([])
+    // const [cardNumber, setCardNumber] = useState(1)
     const [front, isFront] = useState(true)
     const history = useHistory()
 
@@ -22,7 +22,7 @@ function Study () {
             }
         }
         fetchData()
-    }, [])
+    }, [deckId])
 
     function nextCard(index, total) {
         console.log(index)

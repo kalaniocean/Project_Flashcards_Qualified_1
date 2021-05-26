@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams} from "react-router-dom";
 import { readCard, readDeck, updateCard} from "./utils/api/index";
+import CardForm from "./CardForm";
 
-function EditCard () {
+function EditCard ( {deck, setDeck} ) {
     const { deckId, cardId } = useParams()
     const history = useHistory()
     const initialDeckState = {
@@ -19,9 +20,10 @@ function EditCard () {
 
 
     const [card, setCard] = useState(initialDeckState)
-    const [deck, setDeck] = useState(initialCardState)
+    // const [deck, setDeck] = useState(initialCardState)
 
     useEffect(() => {
+        setDeck(initialCardState)
         async function fetchData() {
             const abortController = new AbortController()
             try {
@@ -37,7 +39,7 @@ function EditCard () {
             }
         }
         fetchData()
-    }, [])
+    }, [cardId, deckId])
     
     function handleChange({target}) {
         setCard({
@@ -76,43 +78,9 @@ function EditCard () {
                     Edit Card {cardId}
                 </li>
             </ol>
-            <form onSubmit={handleSubmit}>
-                <h2>
-                    Edit Card
-                </h2>
-                <div className="form-group">
-                    <label>
-                        Front
-                    </label>
-                    <textarea 
-                        id="front"
-                        name="front"
-                        className="form-control"
-                        onChange={handleChange} 
-                        type="text"
-                        value={card.front}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>
-                        Back
-                    </label>
-                    <textarea 
-                        id="back"
-                        name="back"
-                        className="form-control"
-                        onChange={handleChange} 
-                        type="text"
-                        value={card.back}
-                    />
-                </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>
-                    Cancel
-                </button>
-                <button className="btn btn-primary mx-1" type="submit">
-                    Save
-                </button>
-            </form>
+            <CardForm handleChange={handleChange} 
+            handleSubmit={handleSubmit} handleSecondaryAction={handleCancel} 
+            title={"Edit Card"} card={card} secondaryActionText={"Cancel"} />
         </div>
     )
 }

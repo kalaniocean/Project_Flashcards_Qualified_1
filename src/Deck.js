@@ -2,11 +2,11 @@ import React, {useState, useEffect} from "react"
 import { Link, useParams, useHistory } from "react-router-dom"
 import { readDeck, deleteDeck, deleteCard } from "./utils/api/index"
 
-function Deck () {
+function Deck ( {cards, setCards, deck, setDeck} ) {
     const history = useHistory()
     const {deckId} = useParams()
-    const [deck, setDeck] = useState({})
-    const [cards, setCards] = useState([])
+    // const [deck, setDeck] = useState({})
+    // const [cards, setCards] = useState([])
 
     useEffect (() => {
         async function fetchData() {
@@ -23,7 +23,7 @@ function Deck () {
             }
         }
         fetchData()
-    }, [])
+    }, [deckId])
 
     async function handleDeleteDeck(deck) {
         if (window.confirm(`Delete this deck? You will not be able to recover it`)) {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { listDecks, deleteDeck } from "./utils/api/index";
 import { Link, useHistory } from "react-router-dom";
 
-function Home () {
+function Home ({decks, setDecks} ) {
     const history = useHistory()
-    const [decks, setDecks] = useState([])
+    // const [decks, setDecks] = useState([])
     
     useEffect (() => {
         async function fetchData() {
@@ -20,7 +20,7 @@ function Home () {
             }
         }
         fetchData()
-    }, [])
+    }, [deleteDeck])
 
     async function handleDelete(deck) {
         if (window.confirm(`Delete this deck? You will not be able to recover it`)) {
